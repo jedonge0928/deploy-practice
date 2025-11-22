@@ -23,4 +23,4 @@ jobs:
 
       - name: Run new container
         run: |
-          docker run -d --name deploy-practice-container -p 3000:3000 next-app
+          docker run -d --name deploy-practice-container -p 3000:3000 deploy-practice-image
