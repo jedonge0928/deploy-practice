@@ -1,0 +1,26 @@
+name: Deploy Next.js with Docker
+
+on:
+  push:
+    branches: ["main"] # main에 push될 때 자동배포
+
+jobs:
+  deploy:
+    runs-on: self-hosted # 네가 만든 액션 러너 사용
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Build Docker image
+        run: |
+          docker build -t deploy-practice-image .
+
+      - name: Stop old container
+        run: |
+          docker stop deploy-practice-container || true
+          docker rm deploy-practice-container || true
+
+      - name: Run new container
+        run: |
+          docker run -d --name deploy-practice-container -p 3000:3000 next-app
